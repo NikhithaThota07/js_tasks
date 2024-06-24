@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stop Watch</title>
+  <style>
+    body {
+      background-color: gray;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stopwatch {
+      color: white;
+      background-color: black;
+      position: relative;
+      margin-top: 200px;
+      padding: 30px;
+      border-radius: 6px;
+    }
+
+    h1 {
+      margin-left: 100px;
+    }
+
+    button {
+      height: 40px;
+      width: 100px;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="stopwatch">
+    <h1 id="displayTime">00:00.00</h1>
+    <div class="Buttons">
+      <button id="startButton">Start</button>
+      <button id="stopButton" disabled>Stop</button>
+      <button id="resetButton">Reset</button>
+    </div>
+  </div>
+  <script>
+    let seconds = 0, minutes = 0, hours = 0;
+    let displayTime = document.getElementById("displayTime");
+    let timer = null;
+
+    function stopWatch() {
+      seconds++;
+
+      if (seconds === 60) {
+        seconds = 0;
+        minutes++;
+      }
+      if (minutes === 60) {
+        minutes = 0;
+        hours++;
+      }
+
+      let h = hours < 10 ? "0" + hours : hours;
+      let m = minutes < 10 ? "0" + minutes : minutes;
+      let s = seconds < 10 ? "0" + seconds : seconds;
+
+      displayTime.innerHTML = h + ":" + m + ":" + s;
+    }
+
+    function watchStart() {
+      if (timer !== null) {
+        return;  // Prevent starting multiple timers
+      }
+      timer = setInterval(stopWatch, 1000);
+      document.getElementById("startButton").disabled = true;
+      document.getElementById("stopButton").disabled = false;
+    }
+
+    function watchStop() {
+      if (timer === null) {
+        return;  // Prevent stopping non-existent timer
+      }
+      clearInterval(timer);
+      timer = null;
+      document.getElementById("startButton").disabled = false;
+      document.getElementById("stopButton").disabled = true;
+    }
+
+    function watchReset() {
+      seconds = 0;
+      minutes = 0;
+      hours = 0;
+      displayTime.innerHTML = "00:00.00";
+      clearInterval(timer);  // Clear timer if running
+      timer = null;
+      document.getElementById("startButton").disabled = false;
+      document.getElementById("stopButton").disabled = true;
+    }
+
+    document.getElementById("startButton").addEventListener("click", watchStart);
+    document.getElementById("stopButton").addEventListener("click", watchStop);
+    document.getElementById("resetButton").addEventListener("click", watchReset);
+  </script>
+</body>
+</html>
