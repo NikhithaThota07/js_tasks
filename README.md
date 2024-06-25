@@ -17,6 +17,7 @@ HTML acd CSS gives structure and JS gives functionality.
 --> If we click the stop button it stops the timer as it is .
 -->if we click the reset button it resets the total stop watch then we can restart the timer.
 
+# TASK2 
 # Calculator Code - README
 
 This code creates a simple and functional calculator using HTML, CSS, and JavaScript.
